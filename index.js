@@ -76,9 +76,12 @@ async function main() {
       process.exit(0);
     };
 
-    // Start both transports
-    await serverTransport.start();
+    // CRITICAL: Connect to remote SSE FIRST, then start local stdio.
+    // Claude Desktop sends "initialize" the instant stdio starts.
+    // If SSE isn't connected yet, that message gets dropped and
+    // Claude never discovers the tools.
     await clientTransport.start();
+    await serverTransport.start();
 
   } catch (err) {
     console.error("Failed to start proxy:", err);
