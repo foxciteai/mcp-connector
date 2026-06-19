@@ -4,7 +4,7 @@
 
 A transparent Model Context Protocol (MCP) proxy that natively connects Claude Desktop (and other MCP-compatible clients) directly to your [Foxcite](https://foxcite.com) AEO data.
 
-With this connector, you can ask Claude to "analyze my brand's AI visibility," "check my latest citation gaps," or "run a new audit for [query]"—and Claude will seamlessly interface with your Foxcite workspace.
+With this connector, you can leverage [ai search visibility for agencies](https://foxcite.com/features) by asking Claude to "analyze my brand's AI visibility," "check my latest citation gaps," or "run a new audit for [query]"—and Claude will seamlessly interface with your Foxcite workspace.
 
 ## Installation & Configuration
 

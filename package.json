@@ -1,6 +1,6 @@
 {
   "name": "@foxcite/mcp-connector",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A transparent MCP proxy that connects Claude Desktop to Foxcite's remote SSE endpoint natively",
   "main": "index.js",
   "type": "module",
