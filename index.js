@@ -5,26 +5,39 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 
 async function main() {
   const args = process.argv.slice(2);
-  let urlStr = null;
+  let urlStr = process.env.FOXCITE_MCP_URL || null;
+  let hasPositionalUrl = false;
   const headers = new Headers();
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
     if (arg === "--header") {
+      if (i + 1 >= args.length) {
+        console.error("Error: --header requires a 'Name: Value' argument.");
+        process.exit(1);
+      }
       i++;
       const [key, ...val] = args[i].split(":");
       headers.set(key.trim(), val.join(":").trim());
     } else if (arg === "--token") {
+      if (i + 1 >= args.length) {
+        console.error("Error: --token requires a token value.");
+        process.exit(1);
+      }
       i++;
       headers.set("Authorization", `Bearer ${args[i]}`);
-    } else if (!urlStr) {
+    } else if (!hasPositionalUrl) {
       urlStr = arg;
+      hasPositionalUrl = true;
     }
   }
 
+  if (!headers.has("Authorization") && process.env.FOXCITE_API_KEY) {
+    headers.set("Authorization", `Bearer ${process.env.FOXCITE_API_KEY}`);
+  }
+
   if (!urlStr) {
-    console.error("Usage: npx @foxcite/mcp-connector <url> [--header 'Name: Value'] [--token <token>]");
-    process.exit(1);
+    urlStr = "https://api.foxcite.com/mcp/sse";
   }
 
   try {

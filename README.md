@@ -14,14 +14,34 @@ The connector is designed to be run as an npx executable directly from your Clau
 
 Generate an API Key from your [Foxcite Dashboard](https://foxcite.com).
 
-### 2. Configure Claude Desktop
+### 2. Connect Your Agent Client
 
-Open your Claude Desktop configuration file.
+#### Option A: Direct Streamable HTTP (Recommended for Claude Code, Cursor, Codex)
+
+Add Foxcite directly without a proxy binary:
+
+```json
+{
+  "mcpServers": {
+    "foxcite": {
+      "type": "http",
+      "url": "https://api.foxcite.com/mcp",
+      "headers": {
+        "Authorization": "Bearer fc_live_..."
+      }
+    }
+  }
+}
+```
+
+#### Option B: Claude Desktop (`npx` Stdio-to-SSE Bridge)
+
+Open your Claude Desktop configuration file:
 
 - **Mac:** `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
-Add the Foxcite MCP server to your `mcpServers` object:
+Add Foxcite to your `mcpServers` object:
 
 ```json
 {
@@ -37,22 +57,30 @@ Add the Foxcite MCP server to your `mcpServers` object:
 }
 ```
 
-### 3. Restart Claude
+For self-hosted deployments, set `"FOXCITE_MCP_URL": "https://your-host.example.com/mcp/sse"` or pass the URL and `--token <key>` as arguments.
 
-Fully quit and restart Claude Desktop. You will now see the "Foxcite" tools available in the Claude interface!
+### 3. Restart Your Client
+
+Fully quit and restart Claude Desktop (or reload MCP servers in Cursor / Claude Code). Foxcite's tools and audit prompts will be ready to use.
 
 ## Exposed MCP Tools
 
-Once connected, the LLM gains access to the following tools:
+Once connected, your agent has access to 8 focused tools:
 
-- **`list_brands`**: Retrieve all brands and workspaces in the user's account.
-- **`get_visibility_score`**: Fetch the current overall AI Visibility Score (AVS) for a specific brand.
-- **`run_quick_audit`**: Trigger a live scrape against ChatGPT, Claude, Perplexity, etc. to see if a brand is recommended for a given query.
-- **`get_citation_gaps`**: Retrieve specific LLM responses where competitors were cited but the user's brand was omitted.
+- **`run_scan`**: Run a live multi-engine AI search scan (ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, Grok) with zero-setup `domain` + `query` or an existing `brand_id`, returning full responses, cited URLs, uncited consulted sources, and SERP questions.
+- **`get_scan`**: Retrieve full scan evidence and per-engine responses for a `scan_id` or a brand's latest scan.
+- **`get_visibility`**: Fetch the brand's AI Visibility Score (AVS) and competitive citation gaps showing which competitor domains and URLs won missing queries.
+- **`manage_brand`**: List brands, create a brand, add competitors, or track/untrack daily queries.
+- **`site_inspect`**: Inspect any public site or winning competitor URL (`search`, `timeline`, `history` via Wayback Machine, `snapshot` for live title/H1/canonical/JSON-LD).
+- **`keyword_research`**: List tracked keywords, get PAA suggestions, fetch volume/CPC metrics, or score keyword opportunities.
+- **`get_audit_context`**: Retrieve verified `BrandFact` memory, recurring Google SERP questions, recent citation drops, alerts, and past playbooks.
+- **`get_account`**: Check your active plan, credit balance, and recent credit transaction ledger.
+
+Plus 2 MCP Prompts (`ai-visibility-audit` and `humanize-copy`) that guide your coding or research agent through Foxcite's diagnostic workflow.
 
 ## Developer Notes
 
-This connector acts as an SSE (Server-Sent Events) bridge to Foxcite's backend. It uses the official `@modelcontextprotocol/sdk` to expose Foxcite's REST API as an MCP standard interface.
+This connector bridges local `stdio` MCP clients to Foxcite's SSE endpoint (`/mcp/sse`), reading `FOXCITE_API_KEY` and optional `FOXCITE_MCP_URL` from the environment (or `--token` / `--header` / positional `<url>` flags). Modern HTTP MCP clients can connect directly to `https://api.foxcite.com/mcp` via Streamable HTTP.
 
 ## Resources
 
