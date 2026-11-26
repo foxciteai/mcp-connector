@@ -65,7 +65,7 @@ Fully quit and restart Claude Desktop (or reload MCP servers in Cursor / Claude 
 
 ## Exposed MCP Tools
 
-Once connected, your agent has access to 13 focused tools:
+Once connected, your agent has access to 14 focused tools:
 
 - **`run_scan`**: Run a live multi-engine AI search scan (ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, Grok) with zero-setup `domain` + `query` or an existing `brand_id`, returning full responses, cited URLs, uncited consulted sources, and SERP questions.
 - **`get_scan`**: Retrieve full scan evidence and per-engine responses for a `scan_id` or a brand's latest scan.
@@ -80,8 +80,9 @@ Once connected, your agent has access to 13 focused tools:
 - **`get_experiments`**: List a brand's change experiments, or pass `experiment_id` for every reading's per-group mention rates.
 - **`cancel_experiment`**: Stop an experiment's further readings and their credit charges.
 - **`manage_facts`**: Add (one at a time or in bulk), list and retire a brand's verified facts; review the AI answers that contradict them and mark them fixed or not a problem; switch the after-scan check (1 credit per checked scan) on or off.
+- **`action_plans`**: Action plans: what a competitor's cited page does that wins an AI answer, and what to change to be cited instead. `create` (from a scan's engine answer and one cited page; 10 credits, `dry_run` for the quote; a plan already made for that answer and page comes back at no charge), `list`, and `get` (poll until it's written).
 
-Paid tools (`run_scan`, `keyword_research`, `log_change`) accept `dry_run: true`, which returns the credit cost and your balance without running or charging anything. Each tool is also labelled read-only, destructive or reaching outside Foxcite, so clients can decide when to ask you before a call.
+Paid tools (`run_scan`, `keyword_research`, `log_change`, `action_plans`) accept `dry_run: true`, which returns the credit cost and your balance without running or charging anything. Each tool is also labelled read-only, destructive or reaching outside Foxcite, so clients can decide when to ask you before a call.
 
 Plus 2 MCP Prompts (`ai-visibility-audit` and `humanize-copy`) that guide your coding or research agent through Foxcite's diagnostic workflow.
 
