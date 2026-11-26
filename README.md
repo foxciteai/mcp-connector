@@ -65,7 +65,7 @@ Fully quit and restart Claude Desktop (or reload MCP servers in Cursor / Claude 
 
 ## Exposed MCP Tools
 
-Once connected, your agent has access to 8 focused tools:
+Once connected, your agent has access to 12 focused tools:
 
 - **`run_scan`**: Run a live multi-engine AI search scan (ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, Grok) with zero-setup `domain` + `query` or an existing `brand_id`, returning full responses, cited URLs, uncited consulted sources, and SERP questions.
 - **`get_scan`**: Retrieve full scan evidence and per-engine responses for a `scan_id` or a brand's latest scan.
@@ -75,6 +75,10 @@ Once connected, your agent has access to 8 focused tools:
 - **`keyword_research`**: List tracked keywords, get PAA suggestions, fetch volume/CPC metrics, or score keyword opportunities.
 - **`get_audit_context`**: Retrieve verified `BrandFact` memory, recurring Google SERP questions, recent citation drops, alerts, and past playbooks.
 - **`get_account`**: Check your active plan, credit balance, and recent credit transaction ledger.
+- **`log_change`**: Log a site change and start an experiment that measures whether AI engines name the brand more afterwards (treated vs control queries). `dry_run=true` returns the plan and credit estimate only.
+- **`mark_change_shipped`**: Mark a logged change as live, which schedules its after-change readings.
+- **`get_experiments`**: List a brand's change experiments, or pass `experiment_id` for every reading's per-group mention rates.
+- **`cancel_experiment`**: Stop an experiment's further readings and their credit charges.
 
 Plus 2 MCP Prompts (`ai-visibility-audit` and `humanize-copy`) that guide your coding or research agent through Foxcite's diagnostic workflow.
 
