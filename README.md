@@ -73,7 +73,7 @@ Once connected, your agent has access to 12 focused tools:
 - **`manage_brand`**: List brands, create a brand, add competitors, or track/untrack daily queries.
 - **`site_inspect`**: Inspect any public site or winning competitor URL (`search`, `timeline`, `history` via Wayback Machine, `snapshot` for live title/H1/canonical/JSON-LD).
 - **`keyword_research`**: List tracked keywords, get PAA suggestions, fetch volume/CPC metrics, or score keyword opportunities.
-- **`get_audit_context`**: Retrieve verified `BrandFact` memory, recurring Google SERP questions, recent citation drops, alerts, and past playbooks.
+- **`get_audit_context`**: Retrieve verified `BrandFact` memory, recurring Google SERP questions, recent citation drops, alerts, past playbooks, and open wrong facts (AI answers that contradict a verified fact).
 - **`get_account`**: Check your active plan, credit balance, and recent credit transaction ledger.
 - **`log_change`**: Log a site change and start an experiment that measures whether AI engines name the brand more afterwards (treated vs control queries). `dry_run=true` returns the plan and credit estimate only.
 - **`mark_change_shipped`**: Mark a logged change as live, which schedules its after-change readings.
