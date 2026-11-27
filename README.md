@@ -65,10 +65,10 @@ Fully quit and restart Claude Desktop (or reload MCP servers in Cursor / Claude 
 
 ## Exposed MCP Tools
 
-Once connected, your agent has access to 15 focused tools:
+Once connected, your agent has access to 18 focused tools:
 
 - **`run_scan`**: Run a live multi-engine AI search scan (ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews, Grok) with zero-setup `domain` + `query` or an existing `brand_id`, returning full responses, cited URLs, uncited consulted sources, and SERP questions.
-- **`get_scan`**: Retrieve full scan evidence and per-engine responses for a `scan_id` or a brand's latest scan.
+- **`get_scan`**: Retrieve full scan evidence and per-engine responses for a `scan_id` or a brand's latest scan, with what each engine searched, the pages it got back in rank order, and whether the brand was among them (`is_found`).
 - **`get_visibility`**: Fetch the brand's AI Visibility Score (AVS) and competitive citation gaps showing which competitor domains and URLs won missing queries.
 - **`manage_brand`**: List brands, create a brand, add competitors, or track/untrack daily queries.
 - **`site_inspect`**: Inspect any public site or winning competitor URL (`search`, `timeline`, `history` via Wayback Machine, `snapshot` for live title/H1/canonical/JSON-LD).
@@ -82,6 +82,9 @@ Once connected, your agent has access to 15 focused tools:
 - **`manage_facts`**: Add (one at a time or in bulk), list and retire a brand's verified facts; review the AI answers that contradict them and mark them fixed or not a problem; switch the after-scan check (1 credit per checked scan) on or off.
 - **`action_plans`**: Action plans: what a competitor's cited page does that wins an AI answer, and what to change to be cited instead. `create` (from a scan's engine answer and one cited page; 10 credits, `dry_run` for the quote; a plan already made for that answer and page comes back at no charge), `list`, and `get` (poll until it's written).
 - **`get_history`**: A brand's AI visibility over time: cited and named rates against the previous window, a day or week trend, each query's rates and direction (weakest first), each engine's rates, and recent scan ids. Filter by query or engine. No credits.
+- **`monitoring`**: See and change a brand's scheduled monitoring: daily checks on or off (paid plans), which engines run, and the projected credits per day and per 30 days against your balance. Track or untrack queries with `manage_brand`.
+- **`competitors`**: List competitors with their citation share and the answers they won over the brand; see one competitor's most-cited pages and recent wins (with scan ids for `action_plans`); add, hide or unhide competitors. No credits.
+- **`top_up`**: See your balance, plan, and every plan and recharge pack with prices, or get a Stripe Checkout link for one to open and pay. Nothing is charged until checkout is completed. When any tool runs out of credits, its error points here.
 
 Paid tools (`run_scan`, `keyword_research`, `log_change`, `action_plans`) accept `dry_run: true`, which returns the credit cost and your balance without running or charging anything. Each tool is also labelled read-only, destructive or reaching outside Foxcite, so clients can decide when to ask you before a call.
 
